@@ -42,7 +42,6 @@ export async function POST(req) {
         "stop": null
       });
       
-      console.log(chatCompletion.choices[0].message.content);
       const flashcards = JSON.parse(chatCompletion.choices[0].message.content);
 
       return NextResponse.json(flashcards.flashcards)

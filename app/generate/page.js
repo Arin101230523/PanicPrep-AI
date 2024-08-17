@@ -3,12 +3,12 @@
 import { useUser } from '@clerk/nextjs';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { db } from '../../firebase'; 
-import { writeBatch, doc, collection, getDoc } from 'firebase/firestore';
+import {db} from '../../firebase.js';
+import { writeBatch, doc, collection, getDoc, setDoc } from 'firebase/firestore';
 import { Container, Box, Typography, Paper, TextField, Button, Grid, Card, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
 export default function Generate() {
-  const { isLoaded, isSignedIn, user } = useUser();
+  const {isLoaded, isSignedIn, user} = useUser();
   const [flashcards, setFlashcards] = useState([]);
   const [flipped, setFlipped] = useState([]);
   const [text, setText] = useState('');
@@ -18,19 +18,37 @@ export default function Generate() {
   const router = useRouter();
 
   const handleSubmit = async () => {
+    
     try {
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text }), // Ensure the body is JSON
+        body: JSON.stringify({ text }),
       });
       const data = await response.json();
       setFlashcards(data);
+    } catch (error) {
+      console.error('Error generating flashcards:', error);
+    }
+  };
 
+  const saveFlashcards = async () => {
+    if (!isSignedIn || !user) {
+      alert('You need to be signed in to save flashcards');
+      return;
+    }
+  
+    if (!name) {
+      alert('Please enter a name for your collection');
+      return;
+    }
+  
+    try {
       const batch = writeBatch(db);
       const userDocRef = doc(collection(db, 'users'), user.id);
+      console.log(userDocRef);
       const docSnap = await getDoc(userDocRef);
-
+  
       if (docSnap.exists()) {
         const collections = docSnap.data().flashcards || [];
         if (collections.find((f) => f.name === name)) {
@@ -43,20 +61,21 @@ export default function Generate() {
       } else {
         batch.set(userDocRef, { flashcards: [{ name }] });
       }
-
+  
       const colRef = collection(userDocRef, name);
       flashcards.forEach((flashcard) => {
         const cardDocRef = doc(colRef);
         batch.set(cardDocRef, flashcard);
       });
-
+  
       await batch.commit();
       handleClose();
       router.push('/flashcards');
     } catch (error) {
-      console.error('Error generating flashcards:', error);
+      console.error('Error saving flashcards:', error);
     }
   };
+  
 
   const handleCardClick = (id) => {
     setFlipped((prev) => ({
@@ -137,16 +156,16 @@ export default function Generate() {
                         },
                       }}>
                         <div>
-                            <div>
+                          <div>
                             <Typography variant='h5' component='div'>
-                                {flashcard.front}
+                              {flashcard.front}
                             </Typography>
-                            </div>
-                            <div>
+                          </div>
+                          <div>
                             <Typography variant='h5' component='div'>
-                                {flashcard.back}
+                              {flashcard.back}
                             </Typography>
-                            </div>
+                          </div>
                         </div>
                       </Box>
                     </CardContent>
@@ -179,10 +198,7 @@ export default function Generate() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={() => {
-            // Handle saving flashcards logic here
-            handleClose();
-          }}>Save</Button>
+          <Button onClick={saveFlashcards}>Save</Button>
         </DialogActions>
       </Dialog>
     </Container>
