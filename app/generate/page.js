@@ -3,22 +3,31 @@
 import { useUser } from '@clerk/nextjs';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import {db} from '../../firebase.js';
-import { writeBatch, doc, collection, getDoc, setDoc } from 'firebase/firestore';
+import { db } from '../../firebase.js';
+import { writeBatch, doc, collection, getDoc } from 'firebase/firestore';
 import { Container, Box, Typography, Paper, TextField, Button, Grid, Card, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
 export default function Generate() {
-  const {isLoaded, isSignedIn, user} = useUser();
+  const { isLoaded, isSignedIn, user } = useUser();
   const [flashcards, setFlashcards] = useState([]);
   const [flipped, setFlipped] = useState([]);
   const [text, setText] = useState('');
   const [name, setName] = useState('');
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
+  if (!isSignedIn || !user) {
+    return (
+      <div>
+        <p>You must be signed in to access this page. Signing up is completely free!</p>
+      </div>
+    );
+  }
+
   const handleSubmit = async () => {
-    
+    setIsLoading(true);
     try {
       const response = await fetch('/api/generate', {
         method: 'POST',
@@ -29,6 +38,8 @@ export default function Generate() {
       setFlashcards(data);
     } catch (error) {
       console.error('Error generating flashcards:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -37,18 +48,18 @@ export default function Generate() {
       alert('You need to be signed in to save flashcards');
       return;
     }
-  
+
     if (!name) {
       alert('Please enter a name for your collection');
       return;
     }
-  
+
+    setIsLoading(true);
     try {
       const batch = writeBatch(db);
       const userDocRef = doc(collection(db, 'users'), user.id);
-      console.log(userDocRef);
       const docSnap = await getDoc(userDocRef);
-  
+
       if (docSnap.exists()) {
         const collections = docSnap.data().flashcards || [];
         if (collections.find((f) => f.name === name)) {
@@ -61,21 +72,22 @@ export default function Generate() {
       } else {
         batch.set(userDocRef, { flashcards: [{ name }] });
       }
-  
+
       const colRef = collection(userDocRef, name);
       flashcards.forEach((flashcard) => {
         const cardDocRef = doc(colRef);
         batch.set(cardDocRef, flashcard);
       });
-  
+
       await batch.commit();
       handleClose();
       router.push('/flashcards');
     } catch (error) {
       console.error('Error saving flashcards:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
-  
 
   const handleCardClick = (id) => {
     setFlipped((prev) => ({
@@ -115,11 +127,12 @@ export default function Generate() {
             variant='outlined'
             sx={{ mb: 2 }}
           />
-          <Button onClick={handleSubmit} variant='contained' color='primary' fullWidth>
-            Submit
+          <Button onClick={handleSubmit} variant='contained' color='primary' fullWidth disabled={isLoading}>
+            {isLoading ? 'Generating...' : 'Submit'}
           </Button>
         </Paper>
       </Box>
+      {isLoading && <div>Loading...</div>}
       {flashcards.length > 0 && (
         <Box sx={{ mt: 4 }}>
           <Typography variant='h5'>Flashcards Preview</Typography>
@@ -129,32 +142,34 @@ export default function Generate() {
                 <Card>
                   <CardActionArea onClick={() => handleCardClick(index)}>
                     <CardContent>
-                      <Box sx={{
-                        perspective: '1000px',
-                        '& > div': {
-                          transition: 'transform 0.6s',
-                          transformStyle: 'preserve-3d',
-                          position: 'relative',
-                          width: '100%',
-                          height: '200px',
-                          boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
-                          transform: flipped[index] ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                        },
-                        '& > div > div': {
-                          position: 'absolute',
-                          width: '100%',
-                          height: '100%',
-                          backfaceVisibility: 'hidden',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          padding: 2,
-                          boxSizing: 'border-box',
-                        },
-                        '& > div > div:nth-of-type(2)': {
-                          transform: 'rotateY(180deg)',
-                        },
-                      }}>
+                      <Box
+                        sx={{
+                          perspective: '1000px',
+                          '& > div': {
+                            transition: 'transform 0.6s',
+                            transformStyle: 'preserve-3d',
+                            position: 'relative',
+                            width: '100%',
+                            height: '200px',
+                            boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+                            transform: flipped[index] ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                          },
+                          '& > div > div': {
+                            position: 'absolute',
+                            width: '100%',
+                            height: '100%',
+                            backfaceVisibility: 'hidden',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            padding: 2,
+                            boxSizing: 'border-box',
+                          },
+                          '& > div > div:nth-of-type(2)': {
+                            transform: 'rotateY(180deg)',
+                          },
+                        }}
+                      >
                         <div>
                           <div>
                             <Typography variant='h5' component='div'>
@@ -175,7 +190,7 @@ export default function Generate() {
             ))}
           </Grid>
           <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
-            <Button variant='contained' color='secondary' onClick={handleOpen}>
+            <Button variant='contained' color='secondary' onClick={handleOpen} disabled={isLoading}>
               Save
             </Button>
           </Box>
@@ -197,8 +212,8 @@ export default function Generate() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={saveFlashcards}>Save</Button>
+          <Button onClick={handleClose} disabled={isLoading}>Cancel</Button>
+          <Button onClick={saveFlashcards} disabled={isLoading}>Save</Button>
         </DialogActions>
       </Dialog>
     </Container>
