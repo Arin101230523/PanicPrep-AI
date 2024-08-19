@@ -5,8 +5,21 @@ import getStripe from '@/utils/get-stripe';
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Container, AppBar, Toolbar, Typography, Button, Box, Grid } from '@mui/material';
 import Head from 'next/head';
+import {useRouter} from 'next/navigation';
 
 export default function Home() {
+  const router = useRouter();
+
+  const handleBasic = () => {
+    const paying = false;
+    router.push(`/generate?variable=${encodeURIComponent(paying)}`);
+  }
+
+  const handlePro = () => {
+    const paying = true;
+    router.push(`/generate?variable=${encodeURIComponent(paying)}`);
+  }
+
   const handleSubmit = async () => {
     const checkoutSession = await fetch('/api/checkout-session', {
       method: 'POST',
@@ -40,7 +53,7 @@ export default function Home() {
       <AppBar position="static" color="primary" sx={{ mb: 4 }}>
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Flashcard SaaS
+            TriviaLize
           </Typography>
           <SignedOut>
             <Button color="inherit" href='/sign-in'>Login</Button>
@@ -55,10 +68,10 @@ export default function Home() {
       <Box sx={{ textAlign: 'center', mb: 6 }}>
         <Typography variant="h3" gutterBottom>Welcome to Flashcard SaaS</Typography>
         <Typography variant="h6" gutterBottom>
-          The easiest way to create, manage, and study flashcards.
+          The easiest way to create, manage, and study flashcards for all of your trivia needs.
         </Typography>
-        <Button variant="contained" color="secondary" size="large" sx={{ mt: 2 }}>
-          Get Started
+        <Button onClick = {handlePro} variant="contained" color="secondary" size="large" sx={{ mt: 2 }}>
+          Get Started (Pro Functionality)
         </Button>
       </Box>
 
@@ -115,12 +128,12 @@ export default function Home() {
             >
               <Typography variant="h6" gutterBottom>Basic</Typography>
               <Typography variant="h5" gutterBottom>
-                $5 / month
+                $FREE / month
               </Typography>
               <Typography gutterBottom>
                 Access to basic flashcard features.
               </Typography>
-              <Button variant="contained" color="secondary">Choose Basic</Button>
+              <Button onClick = {handleBasic} variant="contained" color="secondary">Choose Basic</Button>
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>

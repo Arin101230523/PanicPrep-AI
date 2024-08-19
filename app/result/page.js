@@ -10,7 +10,7 @@ const ResultPage = () => {
     const session_id = searchParams.get('session_id');
 
     const [loading, setLoading] = useState(true);
-    const [session, getSession] = useState(null);
+    const [session, setSession] = useState(null);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -18,7 +18,7 @@ const ResultPage = () => {
             if(!session_id) return null;
 
             try {
-                const res = await fetch(`/api/checkout_session?session_id=${session_id}`);
+                const res = await fetch(`/api/checkout-session?session_id=${session_id}`);
                 const sessionData = await res.json();
                 if(res.ok) {
                     setSession(sessionData);

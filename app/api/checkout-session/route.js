@@ -1,11 +1,23 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2022-11-15' });
 
 const formatAmountForStripe = (amount) => {
     return Math.round(amount * 100); // Converts the amount to cents
 };
+
+export async function GET(req) {
+    const searchParams = req.nextUrl.searchParams;
+    const session_id = searchParams.get('session_id');
+
+    try {
+        const checkoutSession = await stripe.checkout.sessions.retrieve(session_id);
+        return NextResponse.json(checkoutSession);
+    } catch (error) {
+        return NextResponse.json({ error: 'Error fetching checkout session' }, { status: 500 });
+    }
+}
 
 export async function POST(req) {
     try {
@@ -34,7 +46,7 @@ export async function POST(req) {
 
         const checkoutSession = await stripe.checkout.sessions.create(params);
 
-        return NextResponse.json(checkoutSession, { status: 200 });
+        return NextResponse.json(checkoutSession);
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }

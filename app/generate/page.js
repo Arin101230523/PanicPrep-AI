@@ -1,7 +1,7 @@
 'use client';
 
 import { useUser } from '@clerk/nextjs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { db } from '../../firebase.js';
 import { writeBatch, doc, collection, getDoc } from 'firebase/firestore';
@@ -17,6 +17,12 @@ export default function Generate() {
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
+  const [paying, setPaying] = useState(false);
+
+  useEffect(() => {
+    const { paid } = router;
+    setPaying(paid);
+  }, [router.query]);
 
   if (!isSignedIn || !user) {
     return (
@@ -44,6 +50,11 @@ export default function Generate() {
   };
 
   const saveFlashcards = async () => {
+    if(!paying) {
+      alert('Upgrade to pro to save flashcards');
+      return;
+    }
+    
     if (!isSignedIn || !user) {
       alert('You need to be signed in to save flashcards');
       return;
