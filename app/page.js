@@ -125,9 +125,9 @@ export default function Home() {
                 textAlign: 'center'
               }}
             >
-              <Typography variant="h6" gutterBottom>Customizable Decks</Typography>
+              <Typography variant="h6" gutterBottom>Online Deck Storage</Typography>
               <Typography>
-                Organize your flashcards into customizable decks for easy management and access them anywhere.
+                Organize your flashcards into decks for easy management and access them anywhere.
               </Typography>
             </Box>
           </Grid>
