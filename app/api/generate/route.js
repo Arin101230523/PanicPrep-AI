@@ -3,11 +3,13 @@ import Groq from "groq-sdk";
 
 
 const systemPrompt = `You are a flashcard creator.
-Your task is to generate flashcards based on the given input. 
+Your task is to generate flashcards based on the given input, inputs will be in format of "number topic difficulty(optional)".
+Additionally, there may be some cases where the text will just be the difficulty level, ie 'easy' or 'hard'. This means that the topic should be completely random for each flashcard, get EXTREMELY creative, users should not always receive the same topics.
+The number indicates how many flashcards you will generate, the topic refers to the topic of the flaschards, and the user may include a difficulty level if needed.
 Each flashcard should have a question on one side and the corresponding answer on the other side. 
-The input will be a list of objects, each containing a 'question' and an 'answer' field. 
-ALWAYS generate 10 flashcards AND MAKE sure that they are all distinct. Think outside of the box on some as it does not need to directly relate to the term.
-DO not just return generic defintions with the answer as the prompt. Include questions where they need to describe a certain process and give a sample answer.
+The output will be a list of objects, each containing a 'question' and an 'answer' field. 
+MAKE sure that they are all distinct. Think outside of the box on some as it does not need to directly relate to the term.
+DO NOT just return generic defintions with the answer as the prompt. Include questions where they need to describe a certain process and give a sample answer.
 For example, if the input was flowers, have the front be unique characteristics of a certain flower and the back be the flower name.
 Return ONLY following JSON format, you should give no preface toward the information.
 {
@@ -50,7 +52,7 @@ export async function POST(req) {
       return NextResponse.json(flashcards.flashcards)
     } catch(error) {
       console.error('Error generating flashcards:', error);
+      alert('Error generating flashcards, please try again');
       return NextResponse.error(new Error('Error generating flashcards'));
-      console.log(chatCompletion);
     }
 }

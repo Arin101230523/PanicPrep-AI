@@ -6,9 +6,13 @@ import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Container, AppBar, Toolbar, Typography, Button, Box, Grid } from '@mui/material';
 import Head from 'next/head';
 import {useRouter} from 'next/navigation';
+import Link from 'next/link';
+import { useUser } from '@clerk/nextjs';
+import './globals.css';
 
 export default function Home() {
   const router = useRouter();
+  const { isSignedIn } = useUser();
 
   const handleBasic = () => {
     const paying = false;
@@ -46,7 +50,7 @@ export default function Home() {
   return (
     <Container maxWidth="lg">
       <Head>
-        <title>Flashcard SaaS</title>
+        <title>TriviaLize</title>
         <meta name="description" content="Create flashcards from your text effortlessly" />
       </Head>
 
@@ -55,6 +59,13 @@ export default function Home() {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             TriviaLize
           </Typography>
+          {isSignedIn &&
+              <Link href="/flashcards" passHref>
+              <Button variant="contained" color="primary" sx={{ mr: 2 }}>
+                My Flashcards
+              </Button>
+              </Link>
+          }
           <SignedOut>
             <Button color="inherit" href='/sign-in'>Login</Button>
             <Button color="inherit" href='/sign-up'>Sign Up</Button>
@@ -66,11 +77,11 @@ export default function Home() {
       </AppBar>
 
       <Box sx={{ textAlign: 'center', mb: 6 }}>
-        <Typography variant="h3" gutterBottom>Welcome to Flashcard SaaS</Typography>
+        <Typography variant="h3" gutterBottom>Welcome to TrivaLize</Typography>
         <Typography variant="h6" gutterBottom>
           The easiest way to create, manage, and study flashcards for all of your trivia needs.
         </Typography>
-        <Button onClick = {handlePro} variant="contained" color="secondary" size="large" sx={{ mt: 2 }}>
+        <Button href='/generate' variant="contained" color="secondary" size="large" sx={{ mt: 2 }}>
           Get Started (Pro Functionality)
         </Button>
       </Box>
@@ -133,7 +144,7 @@ export default function Home() {
               <Typography gutterBottom>
                 Access to basic flashcard features.
               </Typography>
-              <Button onClick = {handleBasic} variant="contained" color="secondary">Choose Basic</Button>
+              <Button href = '/generate' variant="contained" color="secondary">Choose Basic</Button>
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
