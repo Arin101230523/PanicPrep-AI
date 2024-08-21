@@ -2,9 +2,9 @@ import {NextResponse} from 'next/server';
 import Groq from "groq-sdk";
 
 
-const systemPrompt = `You are a flashcard creator.
-Your task is to generate flashcards based on the given input, inputs will be in format of "number topic difficulty(optional)".
-Additionally, there may be some cases where the text will just be the difficulty level, ie 'easy' or 'hard'. This means that the topic should be completely random for each flashcard, get EXTREMELY creative, users should not always receive the same topics.
+const systemPrompt = `You are the brains behind Cramify!
+Your task is to generate flashcards based on the given input, inputs will be in format of "number topic or context difficulty(optional)".
+Users will either upload a lengthy text that they want to create flashcards from or they will provide a specific topic where it is up to you to get creative.
 The number indicates how many flashcards you will generate, the topic refers to the topic of the flaschards, and the user may include a difficulty level if needed.
 Each flashcard should have a question on one side and the corresponding answer on the other side. 
 The output will be a list of objects, each containing a 'question' and an 'answer' field. 

@@ -6,6 +6,8 @@ import { doc, getDoc, setDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase.js';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Container, Box, Typography, Paper, TextField, Button, Grid, Card, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import '../globals.css';
+import Link from 'next/link';
 
 export default function Flashcard() {
     const { isLoaded, isSignedIn, user } = useUser();
@@ -47,7 +49,24 @@ export default function Flashcard() {
     }
 
     return (
-        <Container maxWidth='100vw'>
+        <div className = 'generate'>
+                    <Container maxWidth='100vw'>
+                    <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Box>
+                <Link href="/" passHref>
+                    <Button variant="contained" color="primary" sx={{ mr: 2, mt: 4 }}>
+                    Home
+                    </Button>
+                </Link>
+                </Box>
+                <Box>
+                <Link href="/flashcards" passHref>
+                    <Button variant="contained" color="primary" sx={{ mt: 4 }}>
+                    My Flashcards
+                    </Button>
+                </Link>
+                </Box>
+            </Box>    
             <Grid container spacing={3} sx={{ mt: 4 }}>
                     {flashcards.map((flashcard, index) => (
                     <Grid item xs={12} sm={6} md={4} key={index}>
@@ -102,5 +121,6 @@ export default function Flashcard() {
                     ))}
             </Grid>
         </Container>
+        </div>
     )
 }

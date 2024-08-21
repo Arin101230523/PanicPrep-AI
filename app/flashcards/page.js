@@ -5,7 +5,9 @@ import { useEffect, useState } from 'react';
 import { doc, getDoc, setDoc, collection } from 'firebase/firestore';
 import { db } from '../../firebase.js';
 import { useRouter } from 'next/navigation';
-import { CardActionArea, Container, Card, CardContent, Grid, Typography } from '@mui/material';
+import { CardActionArea, Container, Card, CardContent, Grid, Typography, Box, Button } from '@mui/material';
+import '../globals.css';
+import Link from 'next/link';
 
 export default function Flashcards() {
     const { isLoaded, isSignedIn, user } = useUser();
@@ -43,7 +45,17 @@ export default function Flashcards() {
     };
 
     return (
+        <div className = 'generate'>
         <Container maxWidth='100vw'>
+        <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <Box>
+      <Link href="/" passHref>
+        <Button variant="contained" color="primary" sx={{ mr: 2, mt: 4 }}>
+          Home
+        </Button>
+      </Link>
+    </Box>
+  </Box>
             <Grid container spacing={3} sx={{ mt: 4 }}>
                 {flashcards.map((flashcard, index) => (
                     <Grid item xs={12} sm={6} md={4} key={index}>
@@ -59,5 +71,6 @@ export default function Flashcards() {
                 ))}
             </Grid>
         </Container>
+        </div>
     );
 }

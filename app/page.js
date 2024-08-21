@@ -9,10 +9,12 @@ import {useRouter} from 'next/navigation';
 import Link from 'next/link';
 import { useUser } from '@clerk/nextjs';
 import './globals.css';
+import { useState } from 'react';
 
 export default function Home() {
   const router = useRouter();
   const { isSignedIn } = useUser();
+  const [flipped, setFlipped] = useState([]);
 
   const handleBasic = () => {
     const paying = false;
@@ -47,42 +49,50 @@ export default function Home() {
     }
   }
 
+  const handleCardClick = (id) => {
+    setFlipped((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
   return (
     <Container maxWidth="lg">
       <Head>
-        <title>TriviaLize</title>
-        <meta name="description" content="Create flashcards from your text effortlessly" />
+        <title>PanicPrep AI</title>
+        <meta name="description" content="Create flashcards from text effortlessly" />
       </Head>
 
-      <AppBar position="static" color="primary" sx={{ mb: 4 }}>
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            TriviaLize
-          </Typography>
-          {isSignedIn &&
-              <Link href="/flashcards" passHref>
-              <Button variant="contained" color="primary" sx={{ mr: 2 }}>
-                My Flashcards
-              </Button>
-              </Link>
-          }
-          <SignedOut>
-            <Button color="inherit" href='/sign-in'>Login</Button>
-            <Button color="inherit" href='/sign-up'>Sign Up</Button>
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-        </Toolbar>
-      </AppBar>
-
-      <Box sx={{ textAlign: 'center', mb: 6 }}>
-        <Typography variant="h3" gutterBottom>Welcome to TrivaLize</Typography>
+      <AppBar position="static" sx={{ mb: 4, backgroundColor: '#3f51b5' }}>
+  <Toolbar>
+    <Typography variant="h6" sx={{ flexGrow: 1 }}>
+      PanicPrep AI
+    </Typography>
+    {isSignedIn &&
+        <Link href="/flashcards" passHref>
+        <Button variant="contained" sx={{ mr: 2, backgroundColor: '#5c6bc0', color: '#fff' }}>
+          My Flashcards
+        </Button>
+        </Link>
+    }
+    <SignedOut>
+      <Button color="inherit" href='/sign-in'>Login</Button>
+      <Button color="inherit" href='/sign-up'>Sign Up</Button>
+    </SignedOut>
+    <SignedIn>
+      <UserButton />
+    </SignedIn>
+  </Toolbar>
+</AppBar>
+      
+      <Box sx={{ textAlign: 'center', mb: 6, p: 3, border: '1px solid', borderColor: 'grey.300', borderRadius: 2,}}>
+        <Typography variant="h3" gutterBottom>Welcome to PanicPrep AI</Typography>
         <Typography variant="h6" gutterBottom>
-          The easiest way to create, manage, and study flashcards for all of your trivia needs.
+          The easiest way to create, manage, and study flashcards for all of your last minute cramming sessions. 
+          <br/>Simply sign up, put in your text or topic along with the number of flashcards you want, and let us do the rest!
         </Typography>
         <Button href='/generate' variant="contained" color="secondary" size="large" sx={{ mt: 2 }}>
-          Get Started (Pro Functionality)
+          Get Started (Pro Functionality Demo)
         </Button>
       </Box>
 
@@ -101,7 +111,7 @@ export default function Home() {
             >
               <Typography variant="h6" gutterBottom>Efficient Learning</Typography>
               <Typography>
-                Create flashcards quickly with our intelligent text processing algorithms.
+                Create flashcards quickly with our intelligent text processing algorithms so that you can ace your exams.
               </Typography>
             </Box>
           </Grid>
@@ -117,7 +127,7 @@ export default function Home() {
             >
               <Typography variant="h6" gutterBottom>Customizable Decks</Typography>
               <Typography>
-                Organize your flashcards into customizable decks for easy management.
+                Organize your flashcards into customizable decks for easy management and access them anywhere.
               </Typography>
             </Box>
           </Grid>
@@ -142,7 +152,7 @@ export default function Home() {
                 $FREE / month
               </Typography>
               <Typography gutterBottom>
-                Access to basic flashcard features.
+                Access to unlimited flashcards, core features, and no cloud storage for saving flashcard sets.
               </Typography>
               <Button href = '/generate' variant="contained" color="secondary">Choose Basic</Button>
             </Box>
@@ -162,13 +172,28 @@ export default function Home() {
                 $15 / month
               </Typography>
               <Typography gutterBottom>
-                Unlimited flashcards, advanced features, and 1 GB of storage for all your studying needs.
+                Unlimited flashcards, advanced features, and cloud storage for all of your studying needs.
               </Typography>
               <Button variant="contained" color="primary" onClick={handleSubmit}>Choose Pro</Button>
             </Box>
           </Grid>
         </Grid>
       </Box>
+    
+      <div className="area">
+        <ul className="circles">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
     </Container>
   );
 }

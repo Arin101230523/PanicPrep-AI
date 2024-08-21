@@ -2,7 +2,8 @@
 import {useEffect, useState} from 'react';
 import getStripe from '@/utils/get-stripe';
 import {useSearchParams, useRouter } from 'next/navigation';
-import { Container, CircularProgress, Typography, Box } from '@mui/material';
+import { Container, CircularProgress, Typography, Box, Button } from '@mui/material';
+import Link from 'next/link';
 
 const ResultPage = () => {
     const router = useRouter();
@@ -61,6 +62,11 @@ const ResultPage = () => {
                         <Typography variant = 'h6'>Session ID: {session_id}</Typography>
                         <Typography variant = 'body1'>We have received your payment, you will receive a copy of your receipt shortly</Typography>
                     </Box>
+                    <Link href="/" passHref>
+                        <Button variant="contained" color="primary" sx={{ mr: 2, mt: 4}}>
+                            Home
+                        </Button>
+                    </Link>
                 </>
             ) : (
                 <>
@@ -69,6 +75,11 @@ const ResultPage = () => {
                         <Typography variant = 'h6'>Session ID: {session_id}</Typography>
                         <Typography variant = 'body1'>Try again</Typography>
                     </Box>
+                    <Link href="/" passHref>
+                        <Button variant="contained" color="primary" sx={{ mr: 2, mt: 4 }}>
+                            Home
+                        </Button>
+                    </Link>
                 </>
             )}
         </Container>
