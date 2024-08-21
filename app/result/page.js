@@ -57,29 +57,29 @@ const ResultPage = () => {
         <Container maxWidth = '100vw' sx = {{textAlign: 'center', mt: 4,}}>
             {session.paymennt_status === 'paid' ? (
                 <>
-                    <Typography variant = 'h6'>Thanks for paying!!</Typography>
-                    <Box sx = {{mt:22}}>
-                        <Typography variant = 'h6'>Session ID: {session_id}</Typography>
-                        <Typography variant = 'body1'>We have received your payment, you will receive a copy of your receipt shortly</Typography>
-                    </Box>
+                    <Box sx={{ textAlign: 'center', mb: 6, p: 3, border: '1px solid', borderColor: 'grey.300', borderRadius: 2,}}>
+                    <Typography variant="h3" gutterBottom>Thanks for paying!!</Typography>
+                    <Typography variant="h6" gutterBottom>
+                    Session ID: {session_id}
+                    </Typography>
+                    <Typography variant = 'body1'>We have received your payment, you will receive a copy of your receipt shortly</Typography>
                     <Link href="/" passHref>
-                        <Button variant="contained" color="primary" sx={{ mr: 2, mt: 4}}>
-                            Home
-                        </Button>
+                        <Button variant="contained" color="primary" sx= {{mt:4}}>Go to Home</Button>
                     </Link>
+                    </Box>
                 </>
             ) : (
                 <>
-                    <Typography variant = 'h6'>Payment Unsuccessful</Typography>
-                    <Box sx = {{mt:22}}>
-                        <Typography variant = 'h6'>Session ID: {session_id}</Typography>
-                        <Typography variant = 'body1'>Try again</Typography>
-                    </Box>
+                    <Box sx={{ textAlign: 'center', mb: 6, p: 3, border: '1px solid', borderColor: 'grey.300', borderRadius: 2,}}>
+                    <Typography variant="h3" gutterBottom>Payment Unsuccessful</Typography>
+                    <Typography variant="h6" gutterBottom>
+                    Session ID: {session_id}
+                    </Typography>
+                    <Typography variant = 'body1'>Try again</Typography>
                     <Link href="/" passHref>
-                        <Button variant="contained" color="primary" sx={{ mr: 2, mt: 4 }}>
-                            Home
-                        </Button>
+                        <Button variant="contained" color="primary" sx= {{mt:4}}>Go to Home</Button>
                     </Link>
+                    </Box>
                 </>
             )}
         </Container>
