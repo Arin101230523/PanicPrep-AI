@@ -71,7 +71,6 @@ const ResultPage = () => {
                 </>
             ) : (
                 <>
-                    <div className = 'generate'>
                     <Box sx={{ textAlign: 'center', mb: 6, p: 3, border: '1px solid', borderColor: 'grey.300', borderRadius: 2,}}>
                     <Typography variant="h3" gutterBottom>Payment Unsuccessful</Typography>
                     <Typography variant="h6" gutterBottom>
@@ -82,7 +81,6 @@ const ResultPage = () => {
                         <Button variant="contained" color="primary" sx= {{mt:4}}>Go to Home</Button>
                     </Link>
                     </Box>
-                    </div>
                 </>
             )}
         </Container>
