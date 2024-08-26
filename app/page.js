@@ -18,13 +18,15 @@ export default function Home() {
 
   const handleBasic = () => {
     const paying = false;
-    router.push(`/generate?variable=${encodeURIComponent(paying)}`);
-  }
-
+    sessionStorage.setItem('paying', JSON.stringify(paying));
+    router.push('/generate');
+  };
+  
   const handlePro = () => {
     const paying = true;
-    router.push(`/generate?variable=${encodeURIComponent(paying)}`);
-  }
+    sessionStorage.setItem('paying', JSON.stringify(paying));
+    router.push('/generate');
+  };  
 
   const handleSubmit = async () => {
     const checkoutSession = await fetch('/api/checkout-session', {
@@ -61,6 +63,7 @@ export default function Home() {
       <Head>
         <title>PanicPrep AI</title>
         <meta name="description" content="Create flashcards from text effortlessly" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <AppBar position="static" sx={{ mb: 4, backgroundColor: '#3f51b5' }}>
@@ -91,7 +94,7 @@ export default function Home() {
           The easiest way to create, manage, and study flashcards for all of your last minute cramming sessions. 
           <br/>Simply sign up, put in your text or topic along with the number of flashcards you want, and let us do the rest!
         </Typography>
-        <Button href='/generate' variant="contained" color="secondary" size="large" sx={{ mt: 2 }}>
+        <Button onClick = {handlePro} variant="contained" color="secondary" size="large" sx={{ mt: 2 }}>
           Get Started (Pro Functionality Demo)
         </Button>
       </Box>
@@ -131,8 +134,42 @@ export default function Home() {
               </Typography>
             </Box>
           </Grid>
+          <Grid item xs={12} md={6}>
+            <Box
+              sx={{
+                p: 3,
+                border: '1px solid',
+                borderColor: 'grey.300',
+                borderRadius: 2,
+                textAlign: 'center'
+              }}
+            >
+              <Typography variant="h6" gutterBottom>Adaptive Input Processing</Typography>
+              <Typography>
+                Generate flashcards with varying levels of input detail ranging from a simple prompt, a prompt and a difficulty level, or even raw text.
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Box
+              sx={{
+                p: 3,
+                border: '1px solid',
+                borderColor: 'grey.300',
+                borderRadius: 2,
+                textAlign: 'center'
+              }}
+            >
+              <Typography variant="h6" gutterBottom>Customizable Difficulty Selection</Typography>
+              <Typography>
+                Generate flashcards to your difficulty liking so that you can ace your exams.
+              </Typography>
+            </Box>
+          </Grid>
         </Grid>
       </Box>
+
+      
 
       <Box sx={{ my: 6, textAlign: 'center' }}>
         <Typography variant="h4" gutterBottom>Pricing</Typography>
@@ -152,9 +189,9 @@ export default function Home() {
                 $FREE / month
               </Typography>
               <Typography gutterBottom>
-                Access to unlimited flashcards, core features, and no cloud storage for saving flashcard sets.
+                Access to limited amount of flashcard generation, other core features, and no cloud storage for saving flashcard sets.
               </Typography>
-              <Button href = '/generate' variant="contained" color="secondary">Choose Basic</Button>
+              <Button onClick = {handleBasic} variant="contained" color="secondary">Choose Basic</Button>
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -169,10 +206,10 @@ export default function Home() {
             >
               <Typography variant="h6" gutterBottom>Pro</Typography>
               <Typography variant="h5" gutterBottom>
-                $15 / month
+                $2.99 / month
               </Typography>
               <Typography gutterBottom>
-                Unlimited flashcards, advanced features, and cloud storage for all of your studying needs.
+                Access to double the amount of flashcard generation, advanced features, and cloud storage for all of your studying needs.
               </Typography>
               <Button variant="contained" color="primary" onClick={handleSubmit}>Choose Pro</Button>
             </Box>

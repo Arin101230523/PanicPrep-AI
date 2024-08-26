@@ -8,6 +8,7 @@ import { writeBatch, doc, collection, getDoc } from 'firebase/firestore';
 import { Container, Box, Typography, Paper, TextField, Button, Grid, Card, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import { teal, deepOrange, grey } from '@mui/material/colors';
 import Link from 'next/link';
+import { useEffect } from 'react';
 import '../globals.css';
 
 export default function Generate() {
@@ -19,8 +20,35 @@ export default function Generate() {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [number, setNumber] = useState('');
+  const [paying, setPaying] = useState(null);
+
+  const maxLimit = paying ? 10 : 5;
 
   const router = useRouter();
+
+  useEffect(() => {
+    const storedPaying = JSON.parse(sessionStorage.getItem('paying'));
+    setPaying(storedPaying);
+  }, []);
+
+
+
+  const handleNumberChange = (e) => {
+    let value = e.target.value;
+    if (value === '') {
+      setNumber('');
+      return;
+    }
+
+    value = value.replace(/[^0-9]/g, '');
+    if (value === '') {
+      value = '1';
+    } else if (parseInt(value, 10) > maxLimit) {
+      value = maxLimit.toString();
+    }
+
+    setNumber(value);
+  };
 
   if (!isSignedIn || !user) {
     return (
@@ -57,6 +85,11 @@ export default function Generate() {
   const saveFlashcards = async () => {
     if (!isSignedIn || !user) {
       alert('You need to be signed in to save flashcards');
+      return;
+    }
+
+    if (!paying) {
+      alert('You need to have pro membership to save flashcards');
       return;
     }
 
@@ -163,34 +196,20 @@ export default function Generate() {
         sx={{ mb: 2 }}
       />
       <TextField
-        value={number}
-        onChange={(e) => {
-          let value = e.target.value;
-          if (value === '') {
-            setNumber('');
-            return;
-          }
-
-          value = value.replace(/[^0-9]/g, '');
-          if (value === '') {
-            value = '1';
-          } else if (parseInt(value, 10) > 10) {
-            value = '10';
-          }
-          setNumber(value);
-        }}
-        onKeyPress={(e) => {
-          if (['+', '-', '.', 'e'].includes(e.key)) {
-            e.preventDefault();
-          }
-        }}
-        label="Number of Flashcards (Limit 10)"
-        type="text"
-        fullWidth
-        variant="outlined"
-        sx={{ mb: 2 }}
-        inputProps={{ min: 1, max: 10, step: 1 }}
-      />
+      value={number}
+      onChange={handleNumberChange}
+      onKeyPress={(e) => {
+        if (['+', '-', '.', 'e'].includes(e.key)) {
+          e.preventDefault();
+        }
+      }}
+      label={`Number of Flashcards (Limit ${maxLimit})`}
+      type="text"
+      fullWidth
+      variant="outlined"
+      sx={{ mb: 2 }}
+      inputProps={{ min: 1, max: maxLimit, step: 1 }}
+    />
       <Button
         onClick={handleSubmit}
         variant="contained"
