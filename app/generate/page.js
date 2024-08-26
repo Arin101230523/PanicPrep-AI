@@ -55,7 +55,7 @@ export default function Generate() {
       <Box sx={{ textAlign: 'center', mb: 6, p: 3, border: '1px solid', borderColor: 'grey.300', borderRadius: 2,}}>
       <Typography variant="h3" gutterBottom>Not Signed In</Typography>
       <Typography variant="h6" gutterBottom>
-      You must be signed in to access this page. Signing up is completely free!
+        You must be signed in to access this page. Signing up is completely free!
       </Typography>
       <Link href="/" passHref>
         <Button variant="contained" color="primary">Go to Home</Button>
@@ -188,7 +188,7 @@ export default function Generate() {
       <TextField
         value={text}
         onChange={(e) => setText(e.target.value)}
-        label="Enter Topic and/or Difficulty"
+        label="Enter Topic, Text, and/or Difficulty"
         fullWidth
         multiline
         rows={4}
