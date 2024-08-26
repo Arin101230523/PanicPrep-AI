@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { CardActionArea, Container, Card, CardContent, Grid, Typography, Box, Button } from '@mui/material';
 import '../globals.css';
 import Link from 'next/link';
+import { FaTrash } from "react-icons/fa";
 
 export default function Flashcards() {
     const { isLoaded, isSignedIn, user } = useUser();
@@ -44,32 +45,65 @@ export default function Flashcards() {
         Router.push(`/flashcard?id=${id}`);
     };
 
+    const handleDelete = async (id) => {
+        const docRef = doc(collection(db, 'users'), user.id);
+        const docSnap = await getDoc(docRef);
+        const collections = docSnap.data().flashcards || [];
+        const newCollections = collections.filter((collection) => collection.name !== id);
+        await setDoc(docRef, { flashcards: newCollections });
+        setFlashcards(newCollections);
+    }
+
     return (
-        <div className = 'generate'>
-        <Container maxWidth='100vw'>
-        <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-    <Box>
-      <Link href="/" passHref>
-        <Button variant="contained" color="primary" sx={{ mr: 2, mt: 4 }}>
-          Home
-        </Button>
-      </Link>
-    </Box>
-  </Box>
+        <div className='generate'>
+            <Container maxWidth='100vw'>
+                <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Box>
+                        <Link href="/" passHref>
+                            <Button variant="contained" color="primary" sx={{ mr: 2, mt: 4 }}>
+                                Home
+                            </Button>
+                        </Link>
+                    </Box>
+                    <Box>
+                        <Link href="/generate" passHref>
+                            <Button variant="contained" color="primary" sx={{ mr: 2, mt: 4 }}>
+                                Generate
+                            </Button>
+                        </Link>
+                    </Box>
+                </Box>
+           {flashcards.length === 0 ? (
+            <Typography>
+                You currently have no saved flashcards: <br/>
+                <Link href="/generate" passHref>
+                <Button variant="contained" color="primary" sx={{ mr: 2, mt: 4 }}>
+                    Generate Some Now!
+                </Button>
+                </Link>
+            </Typography>
+           ): 
+           (
             <Grid container spacing={3} sx={{ mt: 4 }}>
                 {flashcards.map((flashcard, index) => (
                     <Grid item xs={12} sm={6} md={4} key={index}>
                         {console.log(flashcard)}
                         <Card>
-                            <CardActionArea onClick={() => {handleCardClick(flashcard.name)}}>
-                                <CardContent>
+                            <CardActionArea>
+                                <CardContent onClick={() => {handleCardClick(flashcard.name)}} sx={{ 
+                                                    cursor: 'pointer', 
+                                                    '&:hover':{textDecoration: 'underline'}}}>
                                     <Typography variant='h6'>{flashcard.name}</Typography>
                                 </CardContent>
+                                <Button>
+                                    <Typography onClick={() => {handleDelete(flashcard.name)}}><FaTrash></FaTrash></Typography>
+                                </Button>
                             </CardActionArea>
                         </Card>
                     </Grid>
                 ))}
-            </Grid>
+            </Grid> 
+        )}
         </Container>
         </div>
     );
