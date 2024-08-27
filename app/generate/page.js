@@ -50,7 +50,7 @@ export default function Generate() {
     setNumber(value);
   };
 
-  if (!isSignedIn || !user) {
+  if (!isSignedIn && !user && paying == false) {
     return (
       <Box sx={{ textAlign: 'center', mb: 6, p: 3, border: '1px solid', borderColor: 'grey.300', borderRadius: 2,}}>
       <Typography variant="h3" gutterBottom>Not Signed In</Typography>
@@ -273,7 +273,7 @@ export default function Generate() {
                   >
                     <div>
                       <div>
-                        <Typography variant="h5" component="div">
+                        <Typography variant="subtitle" component="div" sx = {{overflow: 'auto'}}>
                           {flashcard.front}
                         </Typography>
                       </div>
