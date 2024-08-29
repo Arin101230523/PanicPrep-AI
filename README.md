@@ -44,7 +44,7 @@ Adjust the difficulty of your flashcards to better prepare for your exams.
 
 1. **Sign Up**: [Join Us Now](https://panic-prep-ai.vercel.app/sign-up)
 2. **Explore Features**: [See What's New](https://panic-prep-ai.vercel.app/)
-3. **Choose Your Plan**: [Basic Plan] | [Pro Plan]
+3. **Choose Your Plan**: Basic Plan | Pro Plan
 
 ## 🌟 Enjoy Your Flashcard Journey!
 
