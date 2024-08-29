@@ -14,7 +14,7 @@ Welcome to **PanicPrep AI**—your ultimate tool for efficient and effective fla
 1. **👋 Welcome Aboard**: Sign up to get started with PanicPrep AI. Simply input your text or topic and specify the number of flashcards you want.
 2. **⚙️ Choose Your Plan**: 
    - **Basic Plan**: Free access to essential features and limited flashcard generation. No online storage included.
-   - **Pro Plan**: **Free to use for now on get started button**—provides additional flashcard generation, advanced features, and online storage.
+   - **Pro Plan**: **Free to use for now**—provides additional flashcard generation, advanced features, and online storage.
 
 3. **📈 Get Started**: Click on the "Get Started" button to explore our Pro functionality or choose the Basic plan to begin.
 
@@ -42,9 +42,9 @@ Adjust the difficulty of your flashcards to better prepare for your exams.
 
 ## 🌐 Get Started
 
-1. **Sign Up**: [Join Us Now](#)
-2. **Explore Features**: [See What's New](#)
-3. **Choose Your Plan**: [Basic Plan](#) | [Pro Plan](#)
+1. **Sign Up**: [Join Us Now](https://panic-prep-ai.vercel.app/sign-up)
+2. **Explore Features**: [See What's New](https://panic-prep-ai.vercel.app/)
+3. **Choose Your Plan**: [Basic Plan] | [Pro Plan]
 
 ## 🌟 Enjoy Your Flashcard Journey!
 
