@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🚀 PanicPrep AI
 
-## Getting Started
+Welcome to **PanicPrep AI**—your ultimate tool for efficient and effective flashcard creation! Designed to streamline your studying and make last-minute cramming a breeze, PanicPrep AI offers a host of features to help you stay on top of your game.
 
-First, run the development server:
+## 🌟 Key Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **📚 Efficient Learning**: Quickly create flashcards with our intelligent text processing algorithms and ace your exams with ease.
+- **☁️ Online Deck Storage**: Organize and access your flashcards anywhere with online storage for seamless management.
+- **🔄 Adaptive Input Processing**: Generate flashcards from a simple prompt, detailed input, or raw text—customized to fit your needs.
+- **🎯 Customizable Difficulty**: Tailor the difficulty level of your flashcards to match your studying goals.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎯 How It Works
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+1. **👋 Welcome Aboard**: Sign up to get started with PanicPrep AI. Simply input your text or topic and specify the number of flashcards you want.
+2. **⚙️ Choose Your Plan**: 
+   - **Basic Plan**: Free access to essential features and limited flashcard generation. No online storage included.
+   - **Pro Plan**: **Free to use for now**—provides additional flashcard generation, advanced features, and online storage.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. **📈 Get Started**: Click on the "Get Started" button to explore our Pro functionality or choose the Basic plan to begin.
 
-## Learn More
+## 🛠️ Features at a Glance
 
-To learn more about Next.js, take a look at the following resources:
+### 📚 Efficient Learning
+Create flashcards swiftly with our smart algorithms, designed to help you master your material.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### ☁️ Online Deck Storage
+Manage and store your flashcards securely online, making them accessible from anywhere.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### 🔄 Adaptive Input Processing
+Generate flashcards with varying levels of detail and difficulty to suit your study preferences.
 
-## Deploy on Vercel
+### 🎯 Customizable Difficulty Selection
+Adjust the difficulty of your flashcards to better prepare for your exams.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 💸 Pricing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Basic Plan**: $FREE / month  
+  Includes limited flashcard generation and essential features. No online storage.
+
+- **Pro Plan**: **Free to use for now**  
+  Access to additional flashcard generation, advanced features, and online storage.
+
+## 🌐 Get Started
+
+1. **Sign Up**: [Join Us Now](https://panic-prep-ai.vercel.app/sign-up)
+2. **Explore Features**: [See What's New](https://panic-prep-ai.vercel.app/)
+3. **Choose Your Plan**: Basic Plan | Pro Plan
+
+## 🌟 Enjoy Your Flashcard Journey!
+
+Dive in and start creating your ultimate flashcard decks with PanicPrep AI. Happy studying!
