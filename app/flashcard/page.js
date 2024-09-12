@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Container, Box, Typography, Paper, TextField, Button, Grid, Card, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import '../globals.css';
 import Link from 'next/link';
+import { grey } from '@mui/material/colors';
 
 export default function Flashcard() {
     const { isLoaded, isSignedIn, user } = useUser();
@@ -71,51 +72,66 @@ export default function Flashcard() {
     <Grid container spacing={3} sx={{ mt: 4 }}>
   {flashcards.map((flashcard, index) => (
     <Grid item xs={12} sm={6} md={4} key={index}>
-      <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column',
+                backgroundColor: grey[100],
+                boxShadow: `0px 4px 10px ${grey[400]}`,
+                '&:hover': {
+                  backgroundColor: grey[200],
+                  boxShadow: `0px 6px 15px ${grey[500]}`,
+                },
+              }}>
         <CardActionArea onClick={() => handleCardClick(index)} sx={{ flexGrow: 1 }}>
-          <CardContent sx={{ height: '220px', display: 'flex', flexDirection: 'column'}}>
-            <Box
-              sx={{             
-                perspective: '1000px',
-                '& > div': {
-                  transition: 'transform 0.6s',
-                  transformStyle: 'preserve-3d',
-                  position: 'relative',
-                  width: '100%',
-                  height: '100%',
-                  boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
-                  transform: flipped[index] ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                },
-                '& > div > div': {
-                  position: 'absolute',
-                  width: '100%',
-                  height: '100%',
-                  backfaceVisibility: 'hidden',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  padding: 2,
-                  boxSizing: 'border-box',
-                },
-                '& > div > div:nth-of-type(2)': {
-                  transform: 'rotateY(180deg)',
-                },
-              }}
-            >
-              <div>
-                <div>
-                  <Typography variant="h6" component="div" sx = {{fontSize: '0.100rem'}}>
-                    {flashcard.front}
-                  </Typography>
-                </div>
-                <div>
-                  <Typography variant="h6" component="div">
-                    {flashcard.back}
-                  </Typography>
-                </div>
-              </div>
-            </Box>
-          </CardContent>
+        <CardContent sx={{ minHeight: '220px', flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+  <Box
+    sx={{
+      perspective: '1000px',
+      width: '100%',
+      height: '100%',
+      '& > div': {
+        transition: 'transform 0.6s',
+        transformStyle: 'preserve-3d',
+        position: 'relative',
+        width: '100%',
+        minHeight: '225px',
+        boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+        transform: flipped[index] ? 'rotateY(180deg)' : 'rotateY(0deg)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      '& > div > div': {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        backfaceVisibility: 'hidden',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 2,
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+      },
+      '& > div > div:nth-of-type(2)': {
+        transform: 'rotateY(180deg)',
+      },
+    }}
+  >
+    <div>
+      <div>
+        <Typography variant="h6" component="div">
+          {flashcard.front}
+        </Typography>
+      </div>
+      <div>
+        <Typography variant="h6" component="div">
+          {flashcard.back}
+        </Typography>
+      </div>
+    </div>
+  </Box>
+</CardContent>
+
         </CardActionArea>
       </Card>
     </Grid>
