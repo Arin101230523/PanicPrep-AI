@@ -124,7 +124,7 @@ export default function Flashcard() {
         </Typography>
       </div>
       <div>
-        <Typography variant="h6" component="div">
+        <Typography variant="h6" component="div" sx = {{fontWeight: "bold"}}>
           {flashcard.back}
         </Typography>
       </div>

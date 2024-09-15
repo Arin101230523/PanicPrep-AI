@@ -209,6 +209,7 @@ export default function Generate() {
       variant="outlined"
       sx={{ mb: 2 }}
       inputProps={{ min: 1, max: maxLimit, step: 1 }}
+      autoComplete="off"
     />
       <Button
         onClick={handleSubmit}
@@ -278,7 +279,7 @@ export default function Generate() {
                         </Typography>
                       </div>
                       <div>
-                        <Typography variant="h5" component="div">
+                        <Typography variant="subtitle" component="div" sx = {{overflow: 'auto', fontWeight: 'bold'}}>
                           {flashcard.back}
                         </Typography>
                       </div>
@@ -290,6 +291,7 @@ export default function Generate() {
           </Grid>
         ))}
       </Grid>
+
       <Button
         onClick={handleSubmit}
         variant="contained"
@@ -325,6 +327,7 @@ export default function Generate() {
         value={name}
         onChange={(e) => setName(e.target.value)}
         variant="outlined"
+        autoComplete="off"
       />
     </DialogContent>
     <DialogActions>
