@@ -52,7 +52,7 @@ export default function Generate() {
 
   if (!isSignedIn && !user && paying == false) {
     return (
-      <Box sx={{ textAlign: 'center', mb: 6, p: 3, border: '1px solid', borderColor: 'grey.300', borderRadius: 2,}}>
+      <Box sx={{ textAlign: 'center', mb: 6, p: 3, border: '1px solid', borderColor: 'grey.300', borderRadius: 2}}>
       <Typography variant="h3" gutterBottom>Not Signed In</Typography>
       <Typography variant="h6" gutterBottom>
         You must be signed in to access this page. Signing up is completely free!

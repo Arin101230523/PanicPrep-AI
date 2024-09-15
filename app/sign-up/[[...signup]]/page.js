@@ -13,11 +13,14 @@ export default function SignInPage() {
   }, []);
 
   return (
+    <Box class = "color" sx = {{minHeight: "120vw"}}>
     <Container maxWidth="sm">
       <AppBar position="static" sx={{ backgroundColor: '#3f51b5' }}>
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            <Link href = '/' passHref>
             PanicPrep AI
+            </Link>
           </Typography>
           <Button color="inherit" component={Link} href="/sign-in">
             Login
@@ -51,5 +54,6 @@ export default function SignInPage() {
         )}
       </Box>
     </Container>
+    </Box>
   );
 }

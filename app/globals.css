@@ -67,6 +67,11 @@ body{
    
 }
 
+.color {
+    background: #4e54c8;  
+    background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);  
+}
+
 .circles{
     position: absolute;
     top: 0;
@@ -202,7 +207,6 @@ body{
   height: 100%;
 }
 
-/* styles.css */
 .generate {
   background-image: url('./images/background.jpg');
   background-size: cover;
