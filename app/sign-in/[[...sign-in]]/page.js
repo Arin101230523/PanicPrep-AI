@@ -13,7 +13,6 @@ export default function SignInPage() {
   }, []);
 
   return (
-      <Box class = "color" sx = {{minHeight: "105vw"}}>
       <Container maxWidth="sm">
       <AppBar position="static" sx={{ backgroundColor: '#3f51b5'}}>
         <Toolbar>
@@ -42,13 +41,12 @@ export default function SignInPage() {
             textAlign: 'center',
           }}
         >
-          <Typography variant="h4" sx={{ mb: 2 }}>
+          <Typography variant="h4" sx={{ mb: 2}}>
             Sign In
           </Typography>
           <SignIn />
         </Box>
       )}
     </Container>
-    </Box>
   );
 }
