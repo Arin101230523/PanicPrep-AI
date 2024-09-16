@@ -279,7 +279,7 @@ export default function Generate() {
                         </Typography>
                       </div>
                       <div>
-                        <Typography variant="subtitle" component="div" sx = {{overflow: 'auto', fontWeight: 'bold'}}>
+                        <Typography variant="subtitle2" component="div" sx = {{overflow: 'auto', fontWeight: 'bold'}}>
                           {flashcard.back}
                         </Typography>
                       </div>
